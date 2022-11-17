@@ -447,8 +447,10 @@ void TempTable::SendResult(int64_t limit, int64_t offset, ResultSender &sender, 
       common::CT ct = col->TypeName();
 
       auto vc = col->term.vc;
+
       if (ct == common::CT::INT || ct == common::CT::MEDIUMINT || ct == common::CT::SMALLINT ||
-          ct == common::CT::BYTEINT || ct == common::CT::NUM || ct == common::CT::BIGINT) {
+          ct == common::CT::BYTEINT || ct == common::CT::NUM || ct == common::CT::BIGINT  
+          ||ct == common::CT::BIT/* 20221101bylth*/) {
         auto data_ptr = new types::RCNum();
         if (vc->IsNull(it))
           data_ptr->SetToNull();

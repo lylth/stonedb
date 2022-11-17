@@ -56,6 +56,8 @@ class ValueOrNull final {
   bool NotNull() const { return !null; }
   size_t StrLen() const { return len; }
   int64_t Get64() const { return x; }
+  //bylth
+  uint64_t Getu64() const { return (uint64_t)x; }
 
   void SetFixed(int64_t v) {
     Clear();

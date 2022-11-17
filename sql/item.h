@@ -3386,6 +3386,9 @@ class Item_int :public Item_num
   typedef Item_num super;
 public:
   longlong value;
+  //bylth
+  ulonglong usigned_value;
+
   Item_int(int32 i,uint length= MY_INT32_NUM_DECIMAL_DIGITS)
     :value((longlong) i)
     { max_length=length; fixed= 1; }

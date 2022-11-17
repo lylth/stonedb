@@ -65,6 +65,11 @@ void Item_tianmufield::SetType(DataType t) {
 
   tianmu_type = t;
   switch (tianmu_type.valtype) {
+    //20221101bylth
+    case DataType::ValueType::VT_BIT:
+      ivalue = new Item_uint(static_cast<ulonglong>(0));
+      ivalue->unsigned_flag = 1;
+      break;
     case DataType::ValueType::VT_FIXED:
       if (tianmu_type.IsInt())
         ivalue = new Item_int(static_cast<longlong>(0));
@@ -76,9 +81,11 @@ void Item_tianmufield::SetType(DataType t) {
     case DataType::ValueType::VT_FLOAT:
       ivalue = new Item_float(0.0, NOT_FIXED_DEC);
       break;
-
+    
     case DataType::ValueType::VT_STRING:
       ivalue = new Item_string("", 0, ifield->collation.collation, ifield->collation.derivation);
+      break;
+    
       break;
 
     case DataType::ValueType::VT_DATETIME:
@@ -103,6 +110,7 @@ void Item_tianmufield::SetType(DataType t) {
               "Incorrect date/time data type passed to "
               "Item_tianmufield::SetType()");
           break;
+        
       }
       break;
 
@@ -116,6 +124,10 @@ const ValueOrNull Item_tianmufield::GetCurrentValue() { return *buf; }
 
 void Item_tianmufield::FeedValue() {
   switch (tianmu_type.valtype) {
+    //20221101bylth
+    case DataType::ValueType::VT_BIT:     
+      ((Item_uint *)ivalue)->value = buf->Getu64();
+      break;
     case DataType::ValueType::VT_FIXED:
       if (tianmu_type.IsInt())
         ((Item_int *)ivalue)->value = buf->Get64();

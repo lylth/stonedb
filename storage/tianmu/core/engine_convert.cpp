@@ -563,6 +563,9 @@ common::CT Engine::GetCorrespondingType(const enum_field_types &eft) {
     case MYSQL_TYPE_VAR_STRING:
     case MYSQL_TYPE_BLOB:
       return common::CT::VARCHAR;
+    //20221101bylth
+    case MYSQL_TYPE_BIT:
+      return common::CT::BIT;
     default:
       return common::CT::UNK;
   }

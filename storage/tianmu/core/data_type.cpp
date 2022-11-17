@@ -85,6 +85,11 @@ DataType::DataType(common::CT atype, int prec, int scale, DTCollation collation)
       valtype = ValueType::VT_DATETIME;
       break;
 
+    //20221101bylth
+    case common::CT::BIT:
+      valtype = ValueType::VT_BIT;
+      fixmax = MAX(std::numeric_limits<unsigned long long>::max(), 0);
+      break;
     case common::CT::DATETIME_N:
     case common::CT::TIMESTAMP_N:
     case common::CT::TIME_N:

@@ -176,8 +176,8 @@ GDTResult GroupDistinctTable::Add(int64_t group, MIIterator &mit) {
   group += 1;  // offset; 0 means empty position
   std::memmove(input_buffer, (unsigned char *)(&group), group_bytes);
   encoder->Encode(input_buffer + group_bytes, mit, NULL, true);
-  // return FindCurrentRow();
-  return FindCurrentRowByVMTable();
+  return FindCurrentRow();
+  //return FindCurrentRowByVMTable();
 }
 
 GDTResult GroupDistinctTable::Add(int64_t group, int64_t val)  // numeric values

@@ -535,12 +535,36 @@ void Engine::EncodeRecord(const std::string &table_path, int tid, Field **field,
         ptr += sizeof(uint32_t);
         std::memcpy(ptr, str.ptr(), str.length());
         ptr += str.length();
-      } break;
+      }
       case MYSQL_TYPE_SET:
       case MYSQL_TYPE_ENUM:
       case MYSQL_TYPE_GEOMETRY:
       case MYSQL_TYPE_NULL:
       case MYSQL_TYPE_BIT:
+      //20221101bylth
+       /* int delta;
+        delta=1;
+        memset(ptr, 0, delta);
+        memcpy(ptr, f->ptr, 3);*/
+        {
+          /*
+          int64_t v = f->val_int();
+          if (v > common::TIANMU_BIGINT_MAX)
+          v = common::TIANMU_BIGINT_MAX;
+          else if (v < common::TIANMU_BIGINT_MIN)
+          v = common::TIANMU_BIGINT_MIN;
+          *(int64_t *)ptr = v;
+          ptr += sizeof(int64_t);
+          */
+          ulonglong v;
+          //Field_bit::
+          //f->store(v, true);
+          v=(ulonglong) f->val_int();
+          *(ulonglong *)ptr = v;
+          ptr += sizeof(ulonglong);
+        }
+
+        break;
       default:
         throw common::Exception("unsupported mysql type " + std::to_string(f->type()));
         break;
@@ -728,6 +752,12 @@ AttributeTypeInfo Engine::GetAttrTypeInfo(const Field &field) {
         }
       }
       [[fallthrough]];
+  //20221101bylth
+  case MYSQL_TYPE_BIT:  
+    /*return AttributeTypeInfo(common::CT::BIT, notnull, field.field_length, 0, auto_inc, DTCollation(), fmt,
+                             filter);*/
+    return AttributeTypeInfo(Engine::GetCorrespondingType(field), notnull, (ushort)field.field_length, 0, auto_inc,
+                               DTCollation(), fmt, filter);
     default:
       throw common::UnsupportedDataTypeException("Unsupported data type.");
   }

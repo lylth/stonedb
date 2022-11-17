@@ -70,6 +70,8 @@ enum class CT : unsigned char {
   MEDIUMINT,
   BIGINT,
   LONGTEXT,
+  //20221101bylth
+  BIT,
   UNK = 255
 };
 

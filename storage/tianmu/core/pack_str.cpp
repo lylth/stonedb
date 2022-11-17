@@ -701,7 +701,8 @@ types::BString PackStr::GetValueBinary(int locationInPack) const {
   else
     str_size = data.lens32[locationInPack];
   if (str_size == 0) return ZERO_LENGTH_STRING;
-  return types::BString(data.index[locationInPack], str_size);
+  //20221018
+  return types::BString(data.index[locationInPack], str_size,true);
 }
 
 void PackStr::LoadUncompressed(system::Stream *f) {

@@ -34,7 +34,8 @@ struct ColumnType;
 //               date/time type is considered.
 
 struct DataType final {
-  enum class ValueType { VT_FLOAT, VT_FIXED, VT_STRING, VT_DATETIME, VT_NOTKNOWN = 255 };
+
+  enum class ValueType { VT_FLOAT, VT_FIXED, VT_STRING, VT_DATETIME,VT_BIT/* 20221101bylth*/, VT_NOTKNOWN = 255 };
   ValueType valtype;
   common::CT attrtype;  // storage type of TIANMU (only for source columns;
                         // otherwise common::CT::UNK)
@@ -63,6 +64,8 @@ struct DataType final {
   bool IsInt() const { return IsFixed() && (fixscale == 0); }
   bool IsString() const { return valtype == ValueType::VT_STRING; }
   bool IsDateTime() const { return valtype == ValueType::VT_DATETIME; }
+  bool IsBit() const {  return valtype == ValueType::VT_BIT; }
+
 };
 }  // namespace core
 }  // namespace Tianmu

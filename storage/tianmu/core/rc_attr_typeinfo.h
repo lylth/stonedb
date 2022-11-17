@@ -40,7 +40,8 @@ class ATI {
     return IsInteger32Type(attr_type) || attr_type == common::CT::BIGINT;
   }
   static bool IsFixedNumericType(common::CT attr_type) {
-    return IsInteger32Type(attr_type) || attr_type == common::CT::BIGINT || attr_type == common::CT::NUM;
+    return IsInteger32Type(attr_type) || attr_type == common::CT::BIGINT || attr_type == common::CT::NUM
+    || attr_type == common::CT::BIT/* 20221101bylth*/;
   }
 
   static bool IsRealType(common::CT attr_type) {
@@ -48,7 +49,7 @@ class ATI {
   }
   static bool IsNumericType(common::CT attr_type) {
     return IsInteger32Type(attr_type) || attr_type == common::CT::BIGINT || attr_type == common::CT::NUM ||
-           attr_type == common::CT::FLOAT || attr_type == common::CT::REAL;
+           attr_type == common::CT::FLOAT || attr_type == common::CT::REAL || attr_type == common::CT::BIT/* 20221101bylth*/;
   }
 
   static bool IsBinType(common::CT attr_type) {

@@ -20,7 +20,9 @@
 
 #include "core/transaction.h"
 #include "my_time.h"
+#include "sql_error.h"
 #include "system/rc_system.h"
+
 
 namespace Tianmu {
 namespace types {
@@ -627,6 +629,17 @@ common::ErrorCode ValueParserForText::ParseDateTimeOrTimestamp(const BString &rc
         common::GMTSec2GMTTime(&myt, secs_utc);
         myt.second_part = rcv.MicroSecond();
       }
+      else
+      {
+        /*  set_datetime_warning(Sql_condition::SL_WARNING,
+                        ER_WARN_DATA_OUT_OF_RANGE,
+                        rcs, MYSQL_TIMESTAMP_DATETIME, 1);
+
+          push_warning_printf(thd, Sql_condition::SL_WARNING, ER_WARN_DATA_OUT_OF_RANGE, ER(ER_WARN_DATA_OUT_OF_RANGE), field_name,
+                        thd->get_stmt_da()->current_row_for_condition());*/
+
+      }
+
       rcv = RCDateTime(myt, common::CT::TIMESTAMP);
     }
     return common::ErrorCode::SUCCESS;

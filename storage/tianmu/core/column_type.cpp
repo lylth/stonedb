@@ -23,8 +23,14 @@
 
 namespace Tianmu {
 namespace core {
-ColumnType::ColumnType(const DataType &dt) {
-  if (dt.IsFixed()) {
+ColumnType::ColumnType(const DataType &dt) {//bylth
+  if(dt.IsBit())
+  {
+    ColumnType ct(dt.attrtype, false, common::PackFmt::DEFAULT, QuickMath::precision10(
+      std::numeric_limits<unsigned long long>::max()), dt.fixscale);
+    std::swap(ct, *this);
+  }
+  else if (dt.IsFixed()) {
     ColumnType ct(dt.attrtype, false, common::PackFmt::DEFAULT, QuickMath::precision10(dt.fixmax), dt.fixscale);
     std::swap(ct, *this);
   } else if (dt.IsFloat()) {

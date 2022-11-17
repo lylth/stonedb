@@ -46,6 +46,17 @@ ValueOrNull JustATable::GetComplexValue(const int64_t obj, const int attr) {
     val.SetBString(s);
     return val;
   }
+  //20221101bylth
+  if (ct.GetTypeName() == common::CT::BIT) {
+    /* ValueOrNull val;
+    types::BString s;
+    GetTable_S(s, obj, attr);
+    val.SetBString(s);
+    return val;*/
+   // return ValueOrNull(); 
+    return ValueOrNull(GetTable64(obj, attr));
+  }
+
   throw common::Exception("Unrecognized data type in JustATable::GetComplexValue");
 }
 }  // namespace core
